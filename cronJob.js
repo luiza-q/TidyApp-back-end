@@ -1,6 +1,4 @@
-const secrets = require("./secrets.json");
-const { Pool } = require("pg");
-const connection = new Pool(secrets);
+const connection = require("./db");
 
 
 const rotateUsers = async () => {
