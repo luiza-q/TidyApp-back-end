@@ -1,4 +1,4 @@
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -12,6 +12,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+
 
 const apiFunction = require("./api.js");
 const api = apiFunction();
