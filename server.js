@@ -9,6 +9,10 @@ const app = express();
 
 const corsOptions = {
   origin: "https://thetidyapp.herokuapp.com",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+
 };
 
 // app.use(cors(corsOptions));
