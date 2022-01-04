@@ -11,7 +11,8 @@ const corsOptions = {
   origin: "https://thetidyapp.herokuapp.com",
 };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
 
 
 
