@@ -1,0 +1,10 @@
+{ 
+  "user": "jjayovdtatuqqv",
+  "database": "da0j3oiid0e0i",
+  "password": "7936c00d7e2421b854cedfe084d178a2d5af0a36a544ff90fb52df29c05c690b",
+  "host": "ec2-54-195-141-170.eu-west-1.compute.amazonaws.com",
+  "port": 5432,
+  "ssl": {
+    "rejectUnauthorized": false
+  }
+}
