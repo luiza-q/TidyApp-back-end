@@ -1,4 +1,7 @@
-const connection = require("./db")
+// const connection = require("./db")
+const secrets = require("./db_settings.json");
+const { Pool } = require("pg");
+const connection = new Pool(secrets);
 
 const api = () => {
   const login = async (req, res) => {
