@@ -14,7 +14,7 @@ const api = () => {
     if (result.rows.length > 0) {
       return res.status(200).json(result.rows[0]);
     } else {
-      return res.status(400).send("Your email or your password is not correct");
+      return res.status(400).send({error:"Your email or your password is not correct"});
     }
   };
 
@@ -56,8 +56,7 @@ const api = () => {
         const result = await connection.query(userQuery, [newUserEmail]);
         if (result.rows.length > 0) {
           return res
-            .status(400)
-            .send("A user with the same email already exists!");
+            .status(400).json({"A user with the same email already exists!"});
         } else {
           const query =
             "INSERT INTO users (username, email, type_of_user, group_id, password) VALUES ($1, $2, $3, $4, $5) returning id";
