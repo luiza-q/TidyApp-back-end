@@ -56,7 +56,7 @@ const api = () => {
         const result = await connection.query(userQuery, [newUserEmail]);
         if (result.rows.length > 0) {
           return res
-            .status(400).json({"A user with the same email already exists!"});
+            .status(400).json({error:"A user with the same email already exists!"});
         } else {
           const query =
             "INSERT INTO users (username, email, type_of_user, group_id, password) VALUES ($1, $2, $3, $4, $5) returning id";
