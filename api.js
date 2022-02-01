@@ -7,14 +7,22 @@ const md5 = require("md5");
 const api = () => {
   const login = async (req, res) => {
     const email = req.body.email;
-    const password = md5(req.body.encryptedPassword);
-
+    const password = req.body.encryptedPassword;
+    console.log(req.body);
+    console.log(email);
+    console.log(password);
     const userQuery =
       "SELECT group_id, type_of_user FROM users WHERE email=$1 AND password=$2";
     const result = await connection.query(userQuery, [email, password]);
     if (result.rows.length > 0) {
+      console.log(email, password)
+      console.log(res.status(200).json(result.rows[0]))
       return res.status(200).json(result.rows[0]);
     } else {
+      console.log(email, password)
+      console.log(res.json(result.rows[0]))
+      console.log(res.json(result))
+
       return res.status(400).json({ error: "Your email or your password is not correct" });
     }
   };
