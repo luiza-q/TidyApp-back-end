@@ -2,11 +2,12 @@
 const secrets = require("./db_settings.json");
 const { Pool } = require("pg");
 const connection = new Pool(secrets);
+const md5 = require("md5");
 
 const api = () => {
   const login = async (req, res) => {
     const email = req.body.email;
-    const password = req.body.password;
+    const password = md5(req.body.password);
 
     const userQuery =
       "SELECT group_id, type_of_user FROM users WHERE email=$1 AND password=$2";
@@ -56,7 +57,7 @@ const api = () => {
         const result = await connection.query(userQuery, [newUserEmail]);
         if (result.rows.length > 0) {
           return res
-            .status(400).send({errorMessage:"A user with the same email already exists!"});
+            .status(400).send({ errorMessage: "A user with the same email already exists!" });
         } else {
           const query =
             "INSERT INTO users (username, email, type_of_user, group_id, password) VALUES ($1, $2, $3, $4, $5) returning id";
@@ -65,7 +66,7 @@ const api = () => {
             newUser.email,
             newUser.type_of_user,
             newUser.group_id,
-            newUser.password,
+            md5(newUser.password),
           ];
           console.log(val);
           const result = await connection.query(query, val);
@@ -104,21 +105,21 @@ const api = () => {
     const taskList = await connection.query(query, [groupId]);
     return await res.status(200).json(taskList.rows);
   };
-  
+
   const addNewTask = async (newTask) => {
-      const createTask = `insert into tasks (name, task_completed, description, starting_date, group_id, user_id) 
+    const createTask = `insert into tasks (name, task_completed, description, starting_date, group_id, user_id) 
       values ($1, $2, $3, $4, $5, $6) returning id`;
-      
-      await connection.query(createTask, [
-        newTask.name,
-        newTask.task_completed,
-        newTask.description,
-        newTask.starting_date,
-        newTask.group_id,
-        newTask.user_id,
-      ]);
-      // answering with the task id
-      return true;
+
+    await connection.query(createTask, [
+      newTask.name,
+      newTask.task_completed,
+      newTask.description,
+      newTask.starting_date,
+      newTask.group_id,
+      newTask.user_id,
+    ]);
+    // answering with the task id
+    return true;
   };
 
   const addNewTasks = async (req, res) => {
@@ -298,7 +299,7 @@ const api = () => {
     const dbTask = result.rows[0];
     return dbTask;
   };
-  
+
   const replaceTasksValues = (task, newTask) => {
     let updatedTask = {};
 
